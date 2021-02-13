@@ -11,7 +11,10 @@ module Zype
     end
 
     def create(attributes={})
-      load(service.post("/subscriptions", subscription: attributes))
+      type = attributes.delete(:type)
+      params = {subscription: attributes}
+      params[:type] = type if type.present?
+      load(service.post("/subscriptions", params))
     end
 
     def update(id, attributes={})
